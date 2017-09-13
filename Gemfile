@@ -21,6 +21,8 @@ gem 'turbolinks'
 gem 'figaro'
 gem 'bootstrap-sass'
 gem 'devise'
+gem "chartkick"
+gem 'groupdate'
 
 group :development, :test do
   gem 'byebug'
