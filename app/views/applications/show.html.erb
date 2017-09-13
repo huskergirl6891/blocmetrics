@@ -2,7 +2,19 @@
 
 <div class="row">
   <div class="col-md-8">
-    <%= @application.url %><br>
+    <h3>URL</h3>
+    <%= @application.url %><br><br>
+    <h3>Events</h3>
+    <% @events.each do |event| %>
+      <div class="media">
+        <div class="media-body">
+          <h4 class="media-heading">
+            <p><%= event[0] %></p>
+            <small>Count = <%= event[1].length %></small>
+          </h4>
+        </div>
+      </div>
+    <% end %>
   </div>
   <div class="col-md-4">
     <%= link_to "Edit", edit_application_path(@application), class: 'btn btn-success' %>
