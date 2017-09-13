@@ -2,13 +2,50 @@
 <html>
 <head>
   <title>Blocmetrics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li><%= link_to "Home", root_path %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+      <% else %>
+        <li><%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %></li>
+        <li><%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %></li>
+      <% end %>
+    </ul>
+    <% if flash[:alert] %>
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <% flash.each do |name, msg| %>
+          <% if msg.class == Array %>
+            <% msg.each do |message| %>
+              <%= content_tag :div, message, :id => "flash_#{name}" %>
+            <% end %>
+          <% else %>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <% end %>
+        <% end %>
+      </div>
+    <% elsif flash[:notice] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
 
-<%= yield %>
+    <% if user_signed_in? %>
+      Signed in as: <strong><%= current_user.email %></strong> |
+      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+    <% end %>
+    <br>
+
+    <%= yield %>
+  </div>
 
 </body>
 </html>
